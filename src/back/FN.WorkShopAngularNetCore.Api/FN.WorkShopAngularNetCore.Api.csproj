@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FN.WorkShopAngularNetCore.Domain\FN.WorkShopAngularNetCore.Domain.csproj" />
+    <ProjectReference Include="..\FN.WorkShopAngularNetCore.Infra.CrossCuting\FN.WorkShopAngularNetCore.Infra.CrossCuting.csproj" />
+  </ItemGroup>
+
+</Project>
