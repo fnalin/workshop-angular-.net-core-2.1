@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+html {
+    font-size: 14px;
+  }
+  @media (min-width: 768px) {
+    html {
+      font-size: 16px;
+    }
+
+    main.container{
+      min-height: 400px;
+    }
+
+    table.cli-table{
+      width: 70%;
+      margin: 10px auto;
+    }
+
+    table.cli-table  td.auto, th.auto{
+      width: 100%;
+    }
+
+  }
+  
+  .container {
+    max-width: 960px;
+  }
+
+  
