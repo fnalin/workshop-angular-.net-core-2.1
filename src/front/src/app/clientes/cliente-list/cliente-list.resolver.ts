@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { ClienteService } from '../cliente.service';
 import { Resolve } from '@angular/router';
 
-import { Cliente } from '../cliente';
 import { Observable } from 'rxjs';
+
+import { ClienteService } from '../cliente.service';
+import { ClienteListModel } from './cliente-list.model';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ClienteListResolver implements Resolve<Observable<Cliente[]>> {
+export class ClienteListResolver implements Resolve<Observable<ClienteListModel[]>> {
 
     constructor(private clienteService: ClienteService) {}
 

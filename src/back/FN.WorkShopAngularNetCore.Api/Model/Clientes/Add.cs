@@ -11,5 +11,6 @@ namespace FN.WorkShopAngularNetCore.Api.Model.Clientes
         [StringLength(80,ErrorMessage ="Atingido o limite de {1} caracteres em {0}")]
         public string Sobrenome { get; set; }
         public int Idade { get; set; }
+        public Sexo Sexo { get; set; }
     }
 }

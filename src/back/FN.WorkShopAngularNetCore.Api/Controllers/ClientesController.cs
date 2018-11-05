@@ -2,6 +2,8 @@
 using FN.WorkShopAngularNetCore.Domain.Contracts.Repositories;
 using FN.WorkShopAngularNetCore.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FN.WorkShopAngularNetCore.Api.Controllers
@@ -22,7 +24,16 @@ namespace FN.WorkShopAngularNetCore.Api.Controllers
         public async Task<IActionResult> GetAll()
         {
             var data = await _clienteRepository.GetAsync();
-            return Ok(data);
+
+            var model =
+                data.Select(d => new Model.Clientes.Get()
+                {
+                    Id = d.Id,
+                    NomeCompleto = d.NomeCompleto,
+                    Idade = d.Idade,
+                    Sexo = Enum.GetName(typeof(Domain.Enums.Sexo), d.Sexo)
+                });
+            return Ok(model);
         }
 
 
@@ -34,7 +45,15 @@ namespace FN.WorkShopAngularNetCore.Api.Controllers
             if (data == null)
                 return NotFound();
 
-            return Ok(data);
+            var model = new Model.Clientes.Get()
+            {
+                Id = data.Id,
+                NomeCompleto = data.NomeCompleto,
+                Idade = data.Idade,
+                Sexo = Enum.GetName(typeof(Domain.Enums.Sexo), data.Sexo)
+            };
+
+            return Ok(model);
         }
 
         [HttpPost]
@@ -43,10 +62,19 @@ namespace FN.WorkShopAngularNetCore.Api.Controllers
 
             if (ModelState.IsValid)
             {
-                var cliente = new Cliente(command.Nome, command.Sobrenome, command.Idade);
+                var cliente = new Cliente(command.Nome, command.Sobrenome, command.Idade, (int)command.Sexo);
                 _clienteRepository.Add(cliente);
                 await _uow.CommitAsync();
-                return CreatedAtRoute("GetClienteById", new { cliente.Id }, cliente);
+
+                var model = new Model.Clientes.Get()
+                {
+                    Id = cliente.Id,
+                    NomeCompleto = cliente.NomeCompleto,
+                    Idade = cliente.Idade,
+                    Sexo = Enum.GetName(typeof(Domain.Enums.Sexo), cliente.Sexo)
+                };
+
+                return CreatedAtRoute("GetClienteById", new { cliente.Id }, model);
             }
 
             return BadRequest(ModelState);
@@ -63,7 +91,7 @@ namespace FN.WorkShopAngularNetCore.Api.Controllers
                 if (cliente == null)
                     return BadRequest("Cliente não localizado");
 
-                cliente.Alterar(command.Nome, command.Sobrenome, command.Idade);
+                cliente.Alterar(command.Nome, command.Sobrenome, command.Idade, (int)command.Sexo);
                 _clienteRepository.Edit(cliente);
                 await _uow.CommitAsync();
                 return NoContent();

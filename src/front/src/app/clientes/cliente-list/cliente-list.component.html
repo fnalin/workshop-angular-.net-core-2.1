@@ -1,4 +1,8 @@
-<p>Listagem de Clientes</p>
+<h2>Listagem de Clientes</h2>
+
+<div>
+    <a class="btn btn-outline-secondary" [routerLink]="['/clientes/add']">Novo</a>
+</div>
 
 <div class="table-responsive">
     <table class="table table-hover table-striped cli-table">
@@ -6,17 +10,19 @@
             <tr>
                 <th class="auto">Nome</th>
                 <th>Idade</th>
+                <th>Sexo</th>
                 <th></th>
             </tr>
         </thead>
 
         <tbody>
             <tr *ngFor="let cliente of clientes">
-                <td>{{cliente.nome}}</td>
+                <td>{{cliente.nomeCompleto}}</td>
                 <td>{{cliente.idade}}</td>
+                <td>{{cliente.sexo}}</td>
                 <td class="btn-group">
-                    <a class="btn btn-sm btn-success" href="#">Editar</a>
-                    <a class="btn btn-sm btn-danger" href="#">Excluir</a>
+                    <a class="btn btn-sm btn-outline-success" href="#">Editar</a>
+                    <a class="btn btn-sm btn-outline-danger" href="#">Excluir</a>
                 </td>
             </tr>
         </tbody>

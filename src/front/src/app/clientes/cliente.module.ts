@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
-import { ClienteListComponent } from './cliente-list/cliente-list.component';
+import { ClienteListModule } from './cliente-list/cliente-list.module';
+import { ClienteAddEditModule } from './cliente-add-edit/cliente-add-edit.module';
 
 
 @NgModule({
-    imports: [ CommonModule, HttpClientModule ],
-    declarations: [ ClienteListComponent ],
+    imports: [
+        HttpClientModule,
+        ClienteListModule, ClienteAddEditModule ],
     exports: []
 })
 export class ClienteModule {}
