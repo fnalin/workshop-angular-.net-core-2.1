@@ -1,4 +1,4 @@
 ﻿namespace FN.WorkShopAngularNetCore.Domain.Enums
 {
-    public enum Sexo { Masculino = 0, Feminino }
+    public enum Sexo { Masculino = 1, Feminino = 2 }
 }
