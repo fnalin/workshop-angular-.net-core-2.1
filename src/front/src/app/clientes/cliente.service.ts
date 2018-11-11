@@ -22,4 +22,8 @@ export class ClienteService {
     add(cliente: ClienteAddEditModel) {
         return this.http.post(APIUrl, cliente);
     }
+
+    del(id: number) {
+        return this.http.delete(APIUrl + `/${id}`);
+    }
 }
