@@ -42,13 +42,9 @@ export class ClienteAddEditComponent implements OnInit {
 
     validarStringSemNumeros(control: FormControl) {
 
-        const re = /^[A-Za-z]+$/;
+        const re = /^[A-Za-z ]+$/;
 
-        let texto: string = (control.value);
-
-        if (texto != null) {
-            texto = texto.trim();
-        }
+        const texto: string = (control.value);
 
         if (!re.test(texto)) {
             return { stringComNumeros: true };
