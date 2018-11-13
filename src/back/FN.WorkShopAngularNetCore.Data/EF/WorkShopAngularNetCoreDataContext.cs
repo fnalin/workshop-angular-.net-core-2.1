@@ -14,6 +14,7 @@ namespace FN.WorkShopAngularNetCore.Data.EF
         }
 
         public DbSet<Cliente> Cliente { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -23,6 +24,7 @@ namespace FN.WorkShopAngularNetCore.Data.EF
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new Maps.ClienteMap());
+            modelBuilder.ApplyConfiguration(new Maps.UsuarioMap());
             modelBuilder.Seed();
         }
 

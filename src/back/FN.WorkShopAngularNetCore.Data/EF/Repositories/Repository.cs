@@ -8,7 +8,7 @@ namespace FN.WorkShopAngularNetCore.Data.EF.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
-        private readonly WorkShopAngularNetCoreDataContext _ctx;
+        protected readonly WorkShopAngularNetCoreDataContext _ctx;
         private readonly DbSet<TEntity> _db;
 
         public Repository(WorkShopAngularNetCoreDataContext ctx)

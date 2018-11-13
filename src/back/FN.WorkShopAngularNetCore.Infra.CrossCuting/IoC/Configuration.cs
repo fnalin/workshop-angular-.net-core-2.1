@@ -16,6 +16,7 @@ namespace FN.WorkShopAngularNetCore.Infra.CrossCuting.IoC
             services.AddTransient<Domain.Contracts.Infra.IUnitOfWork, Data.EF.UnitOfWork>();
 
             services.AddTransient<Domain.Contracts.Repositories.IClienteRepository, Data.EF.Repositories.ClienteRepository>();
+            services.AddTransient<Domain.Contracts.Repositories.IUsuarioRepository, Data.EF.Repositories.UsuarioRepository>();
         }
     }
 }

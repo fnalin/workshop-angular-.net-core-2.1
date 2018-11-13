@@ -1,6 +1,7 @@
 ﻿using FN.WorkShopAngularNetCore.Domain.Contracts.Infra;
 using FN.WorkShopAngularNetCore.Domain.Contracts.Repositories;
 using FN.WorkShopAngularNetCore.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 namespace FN.WorkShopAngularNetCore.Api.Controllers
 {
     [Route("api/v1/[controller]")]
+    [Authorize]
     public class ClientesController : Controller
     {
         private readonly IClienteRepository _clienteRepository;
