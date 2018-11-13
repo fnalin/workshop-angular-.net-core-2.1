@@ -45,12 +45,13 @@ namespace FN.WorkShopAngularNetCore.Api.Controllers
             if (data == null)
                 return NotFound();
 
-            var model = new Model.Clientes.Get()
+            var model = new Model.Clientes.GetById()
             {
                 Id = data.Id,
-                NomeCompleto = data.NomeCompleto,
+                Nome = data.Nome,
+                Sobrenome = data.Sobrenome,
                 Idade = data.Idade,
-                Sexo = Enum.GetName(typeof(Domain.Enums.Sexo), data.Sexo)
+                Sexo = (int)data.Sexo
             };
 
             return Ok(model);

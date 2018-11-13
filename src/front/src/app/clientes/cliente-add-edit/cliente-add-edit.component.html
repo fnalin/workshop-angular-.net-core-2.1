@@ -1,3 +1,5 @@
+<app-loading [showLoadingIndicator]="showLoadingIndicator" [texto]="'... Registrando'"></app-loading>
+
 <h2 class="text-center">{{ title }} /  {{ subtitle }}</h2>
 
 <div class="row">
@@ -7,7 +9,7 @@
 
         <div class="form-group">
             <label>Nome:</label>
-            <input type="text" class="form-control" formControlName="nome" name="nome" required autofocus>
+            <input type="text" class="form-control" formControlName="nome" id="nomeInput" name="nome" required autofocus>
             <div *ngIf="nome.invalid && (nome.dirty || nome.touched)"
                 class="alert alert-danger m-2">
                 <p *ngIf="nome.errors.required" class="p-1">

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 import { ClienteListModel } from './cliente-list/cliente-list.model';
 import { ClienteAddEditModel } from './cliente-add-edit/cliente-add-edit.model';
@@ -13,14 +13,22 @@ const APIUrl = 'http://localhost:58458/api/v1/Clientes';
 })
 export class ClienteService {
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) { }
 
     getAll(): Observable<ClienteListModel[]> {
         return this.http.get<ClienteListModel[]>(APIUrl);
     }
 
+    getById(id: number): Observable<ClienteAddEditModel> {
+        return this.http.get<ClienteAddEditModel>(APIUrl + `/${id}`);
+    }
+
     add(cliente: ClienteAddEditModel) {
         return this.http.post(APIUrl, cliente);
+    }
+
+    edit(cliente: ClienteAddEditModel) {
+        return this.http.put(APIUrl + `/${cliente.id}`, cliente);
     }
 
     del(id: number) {

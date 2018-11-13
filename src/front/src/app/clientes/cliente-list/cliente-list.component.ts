@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+// import { ToastrService } from 'ngx-toastr';
 
 import { ClienteListModel } from './cliente-list.model';
 import { ClienteService } from '../cliente.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { NotificationService } from '../../notification/notification.service';
 
 @Component({
     templateUrl: 'cliente-list.component.html'
@@ -15,7 +17,11 @@ export class ClienteListComponent implements OnInit {
     clientes: ClienteListModel[] = [];
     cliente: any = {};
     closeResult: string;
-    constructor(private activatedRoute: ActivatedRoute, private clienteService: ClienteService, private modalService: NgbModal) {}
+    constructor(
+      private activatedRoute: ActivatedRoute,
+      private clienteService: ClienteService,
+      private modalService: NgbModal,
+      private notification: NotificationService) {}
 
     ngOnInit(): void {
         // this.clientes = this.activatedRoute.snapshot.data['clientes'];
@@ -47,6 +53,9 @@ export class ClienteListComponent implements OnInit {
       confirmDel() {
         this.clienteService.del(this.cliente.id)
         .subscribe(() => {
+                    this.notification
+                    .showSuccessHTMLMessage(`<strong> ${this.cliente.nomeCompleto} </strong> excluído com sucesso!`,
+                    'WorkShopNG2+');
                     const cliente = this.clientes.find(cli => cli.id === this.cliente.id);
                     const index: number = this.clientes.indexOf(cliente);
                     // console.log(index);
@@ -57,7 +66,7 @@ export class ClienteListComponent implements OnInit {
                 },
                 (error: HttpErrorResponse)  => {
                     console.log(error);
-                    alert('Erro ao tentar excluir o cliente');
+                    this.notification.showError('Erro ao excluir o cliente!', 'WorkShopNG2+');
                     this.modalService.dismissAll('');
                 }
             );

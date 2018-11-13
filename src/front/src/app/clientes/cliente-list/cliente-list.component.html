@@ -21,7 +21,7 @@
                 <td>{{cliente.idade}}</td>
                 <td>{{cliente.sexo}}</td>
                 <td class="btn-group">
-                    <a class="btn btn-sm btn-outline-success" href="#">Editar</a>
+                    <a class="btn btn-sm btn-outline-success" [routerLink]="['/clientes/edit/', cliente.id]">Editar</a>
                     <button class="btn btn-sm btn-outline-danger" (click)="open(content, cliente)">Excluir</button>
                 </td>
             </tr>
