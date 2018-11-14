@@ -7,13 +7,14 @@ import { PageModule } from './pages/page.module';
 import { AppRoutingModule } from './app.routing.module';
 import { ClienteModule } from './clientes/cliente.module';
 import { LoadingModule } from './loading/loading.module';
+import { SignModule } from './sign/sign.module';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule, AppRoutingModule, MenuModule, PageModule, ClienteModule, LoadingModule
+    BrowserModule, AppRoutingModule, MenuModule, PageModule, ClienteModule, LoadingModule, SignModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router, Event, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ClienteService } from '../cliente.service';
 import { Sexo, ClienteAddEditModel } from './cliente-add-edit.model';
@@ -9,7 +9,7 @@ import { NotificationService } from '../../notification/notification.service';
 
 @Component({
     templateUrl: 'cliente-add-edit.component.html',
-    styleUrls: ['cliente-add-edit.component.css']
+    styleUrls: ['../../pages/css/forms.css']
 })
 export class ClienteAddEditComponent implements OnInit, AfterViewInit {
 

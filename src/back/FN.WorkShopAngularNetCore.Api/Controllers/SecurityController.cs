@@ -38,7 +38,9 @@ namespace FN.WorkShopAngularNetCore.Api.Controllers
             {
                 var claims = new[]
                 {
-                     new Claim(ClaimTypes.Name, request.Email),
+                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                     new Claim(ClaimTypes.Name, user.Nome),
+                     new Claim(ClaimTypes.Email, request.Email),
                      //new Claim(ClaimTypes.Role, "Admin")
                 };
 
@@ -58,6 +60,8 @@ namespace FN.WorkShopAngularNetCore.Api.Controllers
                      claims: claims,
                      expires: DateTime.Now.AddMinutes(30),
                      signingCredentials: creds);
+
+                Request.HttpContext.Response.Headers.Add("x-access-token", new JwtSecurityTokenHandler().WriteToken(token));
 
                 return Ok(new
                 {

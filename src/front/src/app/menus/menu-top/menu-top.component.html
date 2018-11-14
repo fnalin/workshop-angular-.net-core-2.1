@@ -1,9 +1,18 @@
-<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-    <h5 class="my-0 mr-md-auto font-weight-normal">Company name</h5>
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm fixed-top">
+    <h5 class="my-0 mr-md-auto font-weight-normal">FanSoft</h5>
     <nav class="my-2 my-md-0 mr-md-3">
       <a class="p-2 text-dark" [routerLink]="['']">Home</a>
       <a class="p-2 text-dark" [routerLink]="['clientes']">Clientes</a>
+      
+      <ng-template #signin>
+        <a class="p-2 text-dark" [routerLink]="['signin']">SignIn</a>
+      </ng-template>
+
       <a class="p-2 text-dark" [routerLink]="['about']">About</a>
+      <a *ngIf="(user$ | async) as user; else signin" class="p-2 text-dark" [routerLink]="['about']">Olá {{user.nome}}</a>
     </nav>
-    <a class="btn btn-outline-primary" href="#">Sign up</a>
+    <a *ngIf="!(user$ | async); else logout" class="btn btn-outline-primary" href="#">Sign up</a>
+    <ng-template #logout>
+      <button (click)="logOut()" class="btn btn-outline-primary">LogOut</button>
+    </ng-template>
 </div>
