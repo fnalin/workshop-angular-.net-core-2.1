@@ -10,10 +10,12 @@ import { ClienteAddEditComponent } from './clientes/cliente-add-edit/cliente-add
 import { ClienteAddEditResolver } from './clientes/cliente-add-edit/cliente-add-edit.resolver';
 import { SignInComponent } from './sign/signin/signin.component';
 import { AuthGuard } from './sign/auth.guard';
+import { SignUpComponent } from './sign/signup/signup.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'signin', component: SignInComponent },
+    { path: 'signup', component: SignUpComponent },
     { path: 'about', component: AboutComponent,  canActivate: [AuthGuard] },
 
     {

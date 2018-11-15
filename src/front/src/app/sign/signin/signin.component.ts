@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../auth.service';
+import { NotificationService } from 'src/app/notification/notification.service';
 
 @Component({
     templateUrl: 'signin.component.html',
@@ -11,6 +12,7 @@ import { AuthService } from '../auth.service';
 export class SignInComponent implements OnInit, AfterViewInit {
 
     signInForm: FormGroup;
+    showLoadingIndicator = false;
 
     // se comunica com o template e vai buscar o #emailInput (variável de template)
     @ViewChild('emailInput') emailInput: ElementRef;
@@ -18,7 +20,8 @@ export class SignInComponent implements OnInit, AfterViewInit {
     constructor(
         private formBuilder: FormBuilder,
         private authService: AuthService,
-        private router: Router) { }
+        private router: Router,
+        private notificationService: NotificationService) { }
 
     ngOnInit() {
         this.formSetup();
@@ -39,15 +42,40 @@ export class SignInComponent implements OnInit, AfterViewInit {
     get senha() { return this.signInForm.get('senha').value; }
 
     login() {
+        this.showLoadingIndicator = true;
         this.authService.authenticate(this.email, this.senha)
             .subscribe(
                 () => {
-                    this.router.navigate(['']); },
+                    this.showLoadingIndicator = false;
+                    this.notificationService.showSuccess('Autenticação efetuada c/ sucesso!', 'WorkShopAngularNetCore');
+                    this.router.navigate(['']);
+                },
                 err => {
                     this.signInForm.reset();
                     this.emailInput.nativeElement.focus();
-                    alert('Email e/ou senha inválidos');
+                    this.showLoadingIndicator = false;
+                    this.notificationService.showError(this.msgError(err), 'WorkShopAngularNetCore');
+                    this.emailInput.nativeElement.focus();
                 });
+    }
+
+    msgError(err: any) {
+        let msg = '';
+
+        switch (err.status) {
+            case 404:
+                msg = 'erro ao contatar api';
+                break;
+            case 400:
+                msg = (!!err.error ? err.error : 'Dados inválidos');
+                break;
+            default:
+                msg = 'Não foi possível se autenticar';
+                break;
+        }
+
+        return msg;
+
     }
 
 }

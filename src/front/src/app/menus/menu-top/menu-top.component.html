@@ -11,7 +11,7 @@
       <a class="p-2 text-dark" [routerLink]="['about']">About</a>
       <a *ngIf="(user$ | async) as user; else signin" class="p-2 text-dark" [routerLink]="['about']">Olá {{user.nome}}</a>
     </nav>
-    <a *ngIf="!(user$ | async); else logout" class="btn btn-outline-primary" href="#">Sign up</a>
+    <a *ngIf="!(user$ | async); else logout" class="btn btn-outline-primary" [routerLink]="['signup']">Sign up</a>
     <ng-template #logout>
       <button (click)="logOut()" class="btn btn-outline-primary">LogOut</button>
     </ng-template>
