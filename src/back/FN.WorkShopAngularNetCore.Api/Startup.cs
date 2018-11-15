@@ -41,12 +41,17 @@ namespace FN.WorkShopAngularNetCore.Api
 
                 s.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
-                    Description = "Entre com o token",
+                    Description = "Entre com o token <br>(Não esqueça do <strong>bearer</strong> na frente.)",
                     Name = "Authorization",
                     In = "header",
                     Type = "apiKey"
+                    
                 });
                 s.AddSecurityRequirement(security);
+
+                // Estava dando exception devido a modelos com a mesmo nome
+                // stackoverflow.com/questions/46071513/swagger-error-conflicting-schemaids-duplicate-schemaids-detected-for-types-a-a/46071635
+                s.CustomSchemaIds(x => x.FullName);
             });
 
             //especifica o esquema usado para autenticacao do tipo Bearer
