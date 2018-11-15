@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angula
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SignUpService } from './signup.service';
 import { UsuarioAddModel } from './usuario-add.model';
+import { NotificationService } from 'src/app/notification/notification.service';
 
 @Component({
     templateUrl: 'signup.component.html',
@@ -17,7 +18,8 @@ export class SignUpComponent implements OnInit, AfterViewInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private signUpService: SignUpService) { }
+        private signUpService: SignUpService,
+        private notificationService: NotificationService) { }
 
     ngOnInit() {
         this.formSetup();
@@ -41,11 +43,12 @@ export class SignUpComponent implements OnInit, AfterViewInit {
         const data = this.signupForm.getRawValue() as UsuarioAddModel;
         this.signUpService.add(data).subscribe(
             _ => {
-                console.log('usuário add c/ sucesso');
+                this.notificationService.showSuccess('usuário add c/ sucesso', 'WorkShopAngularNetCore');
                 this.showLoadingIndicator = false;
             }, err => {
                 this.showLoadingIndicator = false;
-                alert('Erro ao tentar adicionar usuário');
+
+                this.notificationService.showError('erro ao tentar adicionar usuário', 'WorkShopAngularNetCore');
             });
     }
 }
