@@ -1,1 +1,35 @@
-<p>SignUp works!</p>
+<app-loading [showLoadingIndicator]="showLoadingIndicator" [texto]="'... Registrando'"></app-loading>
+
+<h2 class="text-center">{{ title }} /  {{ subtitle }}</h2>
+
+<div class="row">
+
+    <form class="col-md-6 col-sm-12 shadow mx-auto bg-light p-3 m-3"
+        [formGroup]="signupForm" (submit)="save()"
+        novalidate>
+        
+        <div class="form-group">
+            <label>Nome:</label>      
+            <input type="text" class="form-control" #nomeInput formControlName="nome" />
+        </div>
+
+        <div class="form-group">
+                <label>Email:</label>      
+                <input type="email" class="form-control" formControlName="email" />
+        </div>
+
+        <div class="form-group">
+            <label>Senha:</label>      
+            <input type="password" class="form-control" formControlName="senha" />
+        </div>
+
+        <div>
+            <button class="btn btn-outline-primary btn-block" [disabled]="signupForm.invalid">
+                Salvar
+            </button>
+            <a class="btn btn-outline-secondary btn-block" [routerLink]="['/signin']">Cancelar</a>
+        </div>
+
+    </form>
+
+</div>

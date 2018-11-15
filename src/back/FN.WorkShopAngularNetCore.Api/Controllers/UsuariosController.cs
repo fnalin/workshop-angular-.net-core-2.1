@@ -57,7 +57,7 @@ namespace FN.WorkShopAngularNetCore.Api.Controllers
             return Ok(model);
         }
 
-        [HttpPost]
+        [HttpPost, AllowAnonymous]
         public async Task<IActionResult> AddUsuario([FromBody]Model.Usuarios.Add command)
         {
 
