@@ -13,4 +13,8 @@ export class SignUpService {
         // console.log(data);
         return this.http.post(API_URL, data);
     }
+
+    getUserByEmail(email: string) {
+            return this.http.get(API_URL + `/${email}`);
+    }
 }

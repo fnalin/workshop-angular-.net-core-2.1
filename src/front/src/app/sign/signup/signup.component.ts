@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SignUpService } from './signup.service';
 import { UsuarioAddModel } from './usuario-add.model';
 import { NotificationService } from 'src/app/notification/notification.service';
+import { EmailDisponivelValidatorService } from './email-disponivel.validator.service';
 
 @Component({
     templateUrl: 'signup.component.html',
@@ -19,6 +20,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     constructor(
         private formBuilder: FormBuilder,
         private signUpService: SignUpService,
+        private emailDisponivelValidatorService: EmailDisponivelValidatorService,
         private notificationService: NotificationService) { }
 
     ngOnInit() {
@@ -32,9 +34,13 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     formSetup() {
         this.signupForm = this.formBuilder.group({
             id: [null],
-            nome: ['fabiano alberto nalin', [Validators.required, Validators.minLength(5)]],
-            email: ['nalin@fansoft.com.br', [Validators.required, Validators.email]],
-            senha: ['12345678', [Validators.required, Validators.minLength(8)]]
+            nome: [null, [Validators.required, Validators.minLength(5)]],
+            email: [null,
+                // não funcionará se possuir um valor padrão
+                [Validators.required, Validators.email],
+                [this.emailDisponivelValidatorService.checkEmailAvaliable()]
+            ],
+            senha: [null, [Validators.required, Validators.minLength(8)]]
         });
     }
 

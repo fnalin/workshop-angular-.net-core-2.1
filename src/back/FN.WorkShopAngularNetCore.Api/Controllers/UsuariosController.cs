@@ -10,7 +10,7 @@ namespace FN.WorkShopAngularNetCore.Api.Controllers
 {
     [Route("api/v1/[controller]")]
     [Authorize]
-    public class UsuariosController: Controller
+    public class UsuariosController : Controller
     {
 
         private readonly IUsuarioRepository _usuarioRepository;
@@ -37,7 +37,6 @@ namespace FN.WorkShopAngularNetCore.Api.Controllers
                 });
             return Ok(model);
         }
-
 
         [HttpGet("{id:int}", Name = "GetUsuarioById")]
         public async Task<IActionResult> GetById(int id)
@@ -109,6 +108,14 @@ namespace FN.WorkShopAngularNetCore.Api.Controllers
             _usuarioRepository.Del(usuario);
             await _uow.CommitAsync();
             return NoContent();
+        }
+
+        [AllowAnonymous]
+        [HttpGet("{email}", Name = "GetUsuarioByEmail")]
+        public async Task<IActionResult> GetByEmail(string email)
+        {
+            var data = await _usuarioRepository.GetByEmailAsync(email);
+            return Ok(data != null);
         }
 
     }
