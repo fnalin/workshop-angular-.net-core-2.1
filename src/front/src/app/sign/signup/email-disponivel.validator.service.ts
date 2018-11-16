@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, ValidationErrors, FormControl } from '@angular/forms';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 import { debounceTime, switchMap, map, first } from 'rxjs/operators';
 
@@ -15,8 +15,8 @@ export class EmailDisponivelValidatorService {
     checkEmailAvaliable() {
 
         // retorna uma função
-        // testar com FormControl também
-        return (control: FormControl): Observable<ValidationErrors | null> => {
+        // funciona com FormControl também
+        return (control: AbstractControl): Observable<ValidationErrors | null> => {
 
             // return new Observable(null);
 
