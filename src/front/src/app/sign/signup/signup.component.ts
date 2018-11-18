@@ -23,7 +23,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
         private formBuilder: FormBuilder,
         private signUpService: SignUpService,
         private emailDisponivelValidatorService: EmailDisponivelValidatorService,
-        private router: Router;
+        private router: Router,
         private notificationService: NotificationService) { }
 
     ngOnInit() {
