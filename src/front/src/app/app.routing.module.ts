@@ -11,12 +11,21 @@ import { ClienteAddEditResolver } from './clientes/cliente-add-edit/cliente-add-
 import { SignInComponent } from './sign/signin/signin.component';
 import { AuthGuard } from './sign/auth.guard';
 import { SignUpComponent } from './sign/signup/signup.component';
+import { SignComponent } from './sign/sign.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
-    { path: 'signin', component: SignInComponent },
-    { path: 'signup', component: SignUpComponent },
-    { path: 'about', component: AboutComponent,  canActivate: [AuthGuard] },
+
+    {
+        path: 'sign',
+        component: SignComponent,
+        children: [
+            { path: 'in', component: SignInComponent },
+            { path: 'up', component: SignUpComponent }
+        ]
+    },
+
+    { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
 
     {
         path: 'clientes',

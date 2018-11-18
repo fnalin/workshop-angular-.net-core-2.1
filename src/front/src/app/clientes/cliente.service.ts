@@ -27,8 +27,8 @@ export class ClienteService {
         return this.http.post(APIUrl, cliente);
     }
 
-    edit(cliente: ClienteAddEditModel) {
-        return this.http.put(APIUrl + `/${cliente.id}`, cliente);
+    edit(id: number, cliente: ClienteAddEditModel) {
+        return this.http.put(APIUrl + `/${id}`, cliente);
     }
 
     del(id: number) {

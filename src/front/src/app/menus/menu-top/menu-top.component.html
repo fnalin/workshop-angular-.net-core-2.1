@@ -5,13 +5,13 @@
       <a class="p-2 text-dark" [routerLink]="['clientes']">Clientes</a>
       
       <ng-template #signin>
-        <a class="p-2 text-dark" [routerLink]="['signin']">SignIn</a>
+        <a class="p-2 text-dark" [routerLink]="['sign','in']">SignIn</a>
       </ng-template>
 
       <a class="p-2 text-dark" [routerLink]="['about']">About</a>
       <a *ngIf="(user$ | async) as user; else signin" class="p-2 text-dark" [routerLink]="['about']">Olá {{user.nome}}</a>
     </nav>
-    <a *ngIf="!(user$ | async); else logout" class="btn btn-outline-primary" [routerLink]="['signup']">Sign up</a>
+    <a *ngIf="!(user$ | async); else logout" class="btn btn-outline-primary" [routerLink]="['sign','up']">Sign up</a>
     <ng-template #logout>
       <button (click)="logOut()" class="btn btn-outline-primary">LogOut</button>
     </ng-template>

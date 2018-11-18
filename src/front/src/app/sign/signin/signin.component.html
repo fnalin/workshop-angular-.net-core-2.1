@@ -1,25 +1,21 @@
 <app-loading [showLoadingIndicator]="showLoadingIndicator" texto="... Carregando"></app-loading>
-<h2 class="text-center">Efetuar Signin</h2>
+<h2 class="text-center">Efetuar Login</h2>
 
-<div class="row">
+<form (submit)="login()" novalidate [formGroup]="signInForm">
 
-    <form class="col-md-6 shadow p-3 m-3 mx-auto bg-light"
-        (submit)="login()" novalidate [formGroup]="signInForm">
+    <div class="form-group">
+        <label>Email:</label>
+        <input type="email" #emailInput class="form-control" formControlName="email">
+    </div>
 
-        <div class="form-group">
-            <label>Email:</label>
-            <input type="email" #emailInput class="form-control" formControlName="email">
-        </div>
+    <div class="form-group">
+        <label>Senha:</label>
+        <input type="password" class="form-control" formControlName="senha">
+    </div>
 
-        <div class="form-group">
-            <label>Senha:</label>
-            <input type="password" class="form-control" formControlName="senha">
-        </div>
-
-        <div>
-            <button [disabled]="signInForm.invalid" class="btn btn-block btn-outline-primary">Acessar</button>
-            <a class="btn btn-block btn-outline-secondary" [routerLink]="['/']">Cancelar</a>
-        </div>
-    </form>
-
-</div>
+    <div>
+        <button [disabled]="signInForm.invalid" class="btn btn-block btn-outline-primary">Acessar</button>
+        <a class="btn btn-block btn-outline-secondary" [routerLink]="['/']">Cancelar</a>
+        <a class="btn btn-block btn-link" [routerLink]="['/sign/up']">Novo? Inscreva-se</a>
+    </div>
+</form>

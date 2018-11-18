@@ -18,6 +18,7 @@ export class ClienteAddEditComponent implements OnInit, AfterViewInit {
     keys: any[] = [1, 2];
     generos = Sexo;
     showLoadingIndicator = false;
+    id = 0;
 
     constructor(
         private clienteService: ClienteService,
@@ -30,13 +31,14 @@ export class ClienteAddEditComponent implements OnInit, AfterViewInit {
     ngOnInit() {
 
         this.formSetup();
-        const id = this.activatedRoute.snapshot.params.id;
-        if (id != null) {
+        const _id = this.activatedRoute.snapshot.params.id;
+        if (_id != null) {
             this.subtitle = 'Editar';
             const data = this.activatedRoute.snapshot.data.cliente;
             this.clienteForm.setValue(
-                { 'id': data.id, 'nome': data.nome, 'sobrenome': data.sobrenome, 'idade': data.idade, 'sexo': data.sexo }
+                { 'nome': data.nome, 'sobrenome': data.sobrenome, 'idade': data.idade, 'sexo': data.sexo }
             );
+            this.id = _id;
         }
     }
 
@@ -53,7 +55,6 @@ export class ClienteAddEditComponent implements OnInit, AfterViewInit {
 
     private formSetup() {
         this.clienteForm = this.formBuilder.group({
-            id: [null],
             nome: [null, [Validators.required, Validators.minLength(5), this.validarStringSemNumeros]],
             sobrenome: [null, [Validators.required, Validators.minLength(5), this.validarStringSemNumeros]],
             idade: [null, [Validators.required, Validators.min(18)]],
@@ -79,7 +80,7 @@ export class ClienteAddEditComponent implements OnInit, AfterViewInit {
     save() {
         this.showLoadingIndicator = true;
         const cliente: ClienteAddEditModel = {
-            id: this.clienteForm.value.id,
+            id: this.id,
             nome: this.clienteForm.value.nome,
             sobrenome: this.clienteForm.value.sobrenome,
             idade: this.clienteForm.value.idade,
@@ -93,7 +94,7 @@ export class ClienteAddEditComponent implements OnInit, AfterViewInit {
         }
     }
     editarCliente(cliente: ClienteAddEditModel): any {
-        this.clienteService.edit(cliente)
+        this.clienteService.edit(this.id, cliente)
             .subscribe(data => {
                 this.notification.showSuccess(`Cliente alterado com sucesso!`, 'WorkShopNG2+');
                 const item: any = document.querySelector('#nomeInput');
@@ -101,6 +102,7 @@ export class ClienteAddEditComponent implements OnInit, AfterViewInit {
             },
                 error => {
                     this.notification.showError(`Erro ao tentar editar o cliente`, 'WorkShopNG2+');
+                    this.showLoadingIndicator = false;
                 },
                 () => this.showLoadingIndicator = false
             );
@@ -116,6 +118,7 @@ export class ClienteAddEditComponent implements OnInit, AfterViewInit {
             },
                 error => {
                     this.notification.showError(`Erro ao tentar cadastrar o cliente`, 'WorkShopNG2+');
+                    this.showLoadingIndicator = false;
                 },
                 () => this.showLoadingIndicator = false
             );

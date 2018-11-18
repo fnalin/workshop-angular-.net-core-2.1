@@ -22,6 +22,6 @@ export class MenuTopComponent {
 
     logOut() {
         this.userService.logOut();
-        this.route.navigate(['/signin']);
+        this.route.navigate(['/sign/in']);
     }
 }

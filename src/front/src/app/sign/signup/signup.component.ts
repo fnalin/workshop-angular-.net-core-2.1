@@ -1,5 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { SignUpService } from './signup.service';
 import { UsuarioAddModel } from './usuario-add.model';
 import { NotificationService } from 'src/app/notification/notification.service';
@@ -21,6 +23,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
         private formBuilder: FormBuilder,
         private signUpService: SignUpService,
         private emailDisponivelValidatorService: EmailDisponivelValidatorService,
+        private router: Router;
         private notificationService: NotificationService) { }
 
     ngOnInit() {
@@ -51,9 +54,9 @@ export class SignUpComponent implements OnInit, AfterViewInit {
             _ => {
                 this.notificationService.showSuccess('usuário add c/ sucesso', 'WorkShopAngularNetCore');
                 this.showLoadingIndicator = false;
+                this.router.navigate(['/sign/in']);
             }, err => {
                 this.showLoadingIndicator = false;
-
                 this.notificationService.showError('erro ao tentar adicionar usuário', 'WorkShopAngularNetCore');
             });
     }
