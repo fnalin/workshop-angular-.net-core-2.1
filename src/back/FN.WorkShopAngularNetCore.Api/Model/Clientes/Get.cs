@@ -6,5 +6,6 @@
         public string NomeCompleto { get; set; }
         public int Idade { get; set; }
         public string Sexo { get; set; }
+        public string FotoNome { get; set; }
     }
 }

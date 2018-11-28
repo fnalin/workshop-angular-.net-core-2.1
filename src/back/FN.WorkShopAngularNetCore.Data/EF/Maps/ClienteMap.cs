@@ -16,7 +16,7 @@ namespace FN.WorkShopAngularNetCore.Data.EF.Maps
             builder.Property(c => c.Sobrenome).IsRequired().HasColumnType("varchar(80)");
             builder.Ignore(c => c.NomeCompleto);
             builder.Property(c => c.Idade).HasColumnType("int");
-
+            builder.Property(c => c.FotoNome).IsRequired().HasColumnType("varchar(255)");
         }
     }
 }
