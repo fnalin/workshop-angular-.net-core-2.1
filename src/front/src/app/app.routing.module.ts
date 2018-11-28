@@ -8,21 +8,21 @@ import { ClienteListComponent } from './clientes/cliente-list/cliente-list.compo
 import { ClienteListResolver } from './clientes/cliente-list/cliente-list.resolver';
 import { ClienteAddEditComponent } from './clientes/cliente-add-edit/cliente-add-edit.component';
 import { ClienteAddEditResolver } from './clientes/cliente-add-edit/cliente-add-edit.resolver';
-import { SignInComponent } from './sign/signin/signin.component';
 import { AuthGuard } from './sign/auth.guard';
-import { SignUpComponent } from './sign/signup/signup.component';
-import { SignComponent } from './sign/sign.component';
 
+// pathMatch: 'full'=> não vincula partes da rota, ou seja, tem que ser todo o endereço
 const routes: Routes = [
-    { path: '', component: HomeComponent },
+    { path: '', pathMatch: 'full', redirectTo: 'home' },
+    { path: 'home', component: HomeComponent },
 
     {
+        // path q será a raiz da rota filha
         path: 'sign',
-        component: SignComponent,
-        children: [
-            { path: 'in', component: SignInComponent },
-            { path: 'up', component: SignUpComponent }
-        ]
+        loadChildren: './sign/sign.module#SignModule'
+        /*
+            sign.module: arquivo físico do módulo
+            SignModule nome da classe onde está o módulo
+         */
     },
 
     { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
@@ -53,7 +53,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, {useHash: true})],
+    imports: [RouterModule.forRoot(routes, { useHash: false })],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

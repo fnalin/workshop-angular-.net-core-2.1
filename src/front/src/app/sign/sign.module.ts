@@ -8,12 +8,14 @@ import { SignComponent } from './sign.component';
 
 import { SignInModule } from './signin/signin.module';
 import { SignUpModule } from './signup/signup.module';
+import { SignRoutingModule } from './sign.routing.module';
 
 @NgModule({
     declarations: [SignComponent],
     imports: [
         RouterModule,
-        SignInModule, SignUpModule
+        SignInModule, SignUpModule,
+        SignRoutingModule
     ],
     exports: [],
     providers: [
