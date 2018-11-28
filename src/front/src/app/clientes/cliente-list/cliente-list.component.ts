@@ -3,11 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-// import { ToastrService } from 'ngx-toastr';
 
 import { ClienteListModel } from './cliente-list.model';
 import { ClienteService } from '../cliente.service';
 import { NotificationService } from '../../notification/notification.service';
+
+// TODO: pegar do environment
+const URL = 'http://localhost:58458/api/v1/Clientes/';
 
 @Component({
     templateUrl: 'cliente-list.component.html'
@@ -17,6 +19,7 @@ export class ClienteListComponent implements OnInit {
     clientes: ClienteListModel[] = [];
     cliente: any = {};
     closeResult: string;
+    url = URL;
     constructor(
       private activatedRoute: ActivatedRoute,
       private clienteService: ClienteService,
@@ -26,7 +29,6 @@ export class ClienteListComponent implements OnInit {
     ngOnInit(): void {
         // this.clientes = this.activatedRoute.snapshot.data['clientes'];
         this.clientes = this.activatedRoute.snapshot.data.clientes;
-        // console.log(this.activatedRoute.snapshot);
     }
 
     open(content, cliente: ClienteListModel) {

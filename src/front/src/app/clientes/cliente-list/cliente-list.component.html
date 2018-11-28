@@ -8,6 +8,7 @@
     <table class="table table-hover table-striped cli-table">
         <thead class="thead-dark">
             <tr>
+                <th></th>
                 <th class="auto">Nome</th>
                 <th>Idade</th>
                 <th>Sexo</th>
@@ -17,6 +18,7 @@
 
         <tbody>
             <tr *ngFor="let cliente of clientes">
+                <td><img width="50" [src]="this.url + cliente.fotoNome"></td>
                 <td>{{cliente.nomeCompleto}}</td>
                 <td>{{cliente.idade}}</td>
                 <td>{{cliente.sexo}}</td>

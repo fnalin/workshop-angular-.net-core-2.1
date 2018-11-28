@@ -24,14 +24,23 @@ export class ClienteService {
     }
 
     add(cliente: ClienteAddEditModel) {
-        return this.http.post(APIUrl, cliente);
+        const formData = this.getFormData(cliente);
+        // console.log(formData);
+        return this.http.post(APIUrl, formData);
     }
 
     edit(id: number, cliente: ClienteAddEditModel) {
-        return this.http.put(APIUrl + `/${id}`, cliente);
+        const formData = this.getFormData(cliente);
+        return this.http.put(APIUrl + `/${id}`, formData);
     }
 
     del(id: number) {
         return this.http.delete(APIUrl + `/${id}`);
+    }
+
+    private getFormData(data: any) {
+        const formData = new FormData();
+        Object.keys(data).forEach(key => formData.append(key, data[key]));
+        return formData;
     }
 }
