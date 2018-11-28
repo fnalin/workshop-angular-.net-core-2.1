@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { AuthService } from '../auth.service';
 import { NotificationService } from 'src/app/notification/notification.service';
@@ -13,7 +13,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
 
     signInForm: FormGroup;
     showLoadingIndicator = false;
-
+    returnURL: string;
     // se comunica com o template e vai buscar o #emailInput (variável de template)
     @ViewChild('emailInput') emailInput: ElementRef;
 
@@ -21,9 +21,11 @@ export class SignInComponent implements OnInit, AfterViewInit {
         private formBuilder: FormBuilder,
         private authService: AuthService,
         private router: Router,
+        private activatedRoute: ActivatedRoute,
         private notificationService: NotificationService) { }
 
     ngOnInit() {
+        this.activatedRoute.queryParams.subscribe(params => this.returnURL = params.returnURL);
         this.formSetup();
     }
 
@@ -48,7 +50,12 @@ export class SignInComponent implements OnInit, AfterViewInit {
                 () => {
                     this.showLoadingIndicator = false;
                     this.notificationService.showSuccess('Autenticação efetuada c/ sucesso!', 'WorkShopAngularNetCore');
-                    this.router.navigate(['']);
+
+                    if (this.returnURL) {
+                        this.router.navigateByUrl(this.returnURL);
+                    } else {
+                        this.router.navigate(['']);
+                    }
                 },
                 err => {
                     this.signInForm.reset();
