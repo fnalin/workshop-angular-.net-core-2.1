@@ -38,16 +38,37 @@ export class ClienteAddEditComponent implements OnInit, AfterViewInit {
     ngOnInit() {
 
         this.formSetup();
-        const _id = this.activatedRoute.snapshot.params.id;
-        if (_id != null) {
-            this.subtitle = 'Editar';
-            const data = this.activatedRoute.snapshot.data.cliente;
-            this.clienteForm.setValue(
-                { 'nome': data.nome, 'sobrenome': data.sobrenome, 'idade': data.idade, 'sexo': data.sexo, 'file': 'ok' }
-            );
-            this.id = _id;
-            this.previewBase64 = data.dataURL;
-        }
+
+        /*
+            Quando o componente já está carregado e há só a troca de parâmetros, é necessário detectar esse
+            comportamento através do subscribe() dos parâmetro
+        */
+
+        // const _id = this.activatedRoute.snapshot.params.id;
+
+        // if (_id != null) {
+        //     this.subtitle = 'Editar';
+        //     const data = this.activatedRoute.snapshot.data.cliente;
+        //     this.clienteForm.setValue(
+        //         { 'nome': data.nome, 'sobrenome': data.sobrenome, 'idade': data.idade, 'sexo': data.sexo, 'file': 'ok' }
+        //     );
+        //     this.id = _id;
+        //     this.previewBase64 = data.dataURL;
+        // }
+
+        this.activatedRoute.params.subscribe(params => {
+            if (!!params.id) {
+                this.subtitle = 'Editar';
+                const data = this.activatedRoute.snapshot.data.cliente;
+                this.clienteForm.setValue(
+                    { 'nome': data.nome, 'sobrenome': data.sobrenome, 'idade': data.idade, 'sexo': data.sexo, 'file': 'ok' }
+                );
+                this.id = params.id;
+                this.previewBase64 = data.dataURL;
+            }
+        });
+
+
     }
 
     ngAfterViewInit(): void {
