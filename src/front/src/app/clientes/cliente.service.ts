@@ -26,12 +26,12 @@ export class ClienteService {
     add(cliente: ClienteAddEditModel) {
         const formData = this.getFormData(cliente);
         // console.log(formData);
-        return this.http.post(APIUrl, formData);
+        return this.http.post(APIUrl, formData, { observe: 'events', reportProgress: true});
     }
 
     edit(id: number, cliente: ClienteAddEditModel) {
         const formData = this.getFormData(cliente);
-        return this.http.put(APIUrl + `/${id}`, formData);
+        return this.http.put(APIUrl + `/${id}`, formData, { observe: 'events', reportProgress: true});
     }
 
     del(id: number) {

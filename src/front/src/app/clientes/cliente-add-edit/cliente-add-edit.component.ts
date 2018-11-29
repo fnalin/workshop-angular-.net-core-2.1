@@ -2,6 +2,9 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
+
+import { finalize } from 'rxjs/operators';
 
 import { ClienteService } from '../cliente.service';
 import { Sexo, ClienteAddEditModel } from './cliente-add-edit.model';
@@ -22,6 +25,7 @@ export class ClienteAddEditComponent implements OnInit, AfterViewInit {
     id = 0;
     file: File; // recebe o valor no (change) do input
     previewBase64: string; // recebe o base 64 da foto
+    percentDone = 0;
 
     constructor(
         private clienteService: ClienteService,
@@ -65,18 +69,18 @@ export class ClienteAddEditComponent implements OnInit, AfterViewInit {
             sexo: [null, Validators.required],
             file: [null, Validators.required]
         }
-        // , {
-        //     validator: (): any => {
-        //         // validação não vinculada à itens do form
-        //         if (!this.previewBase64) {
-        //             // console.log('tá inválido');
-        //             return { dataURL: true };
-        //         }
-        //         console.log('tá válido');
-        //         return null;
-        //     }
-        //     }
-            );
+            // , {
+            //     validator: (): any => {
+            //         // validação não vinculada à itens do form
+            //         if (!this.previewBase64) {
+            //             // console.log('tá inválido');
+            //             return { dataURL: true };
+            //         }
+            //         console.log('tá válido');
+            //         return null;
+            //     }
+            //     }
+        );
     }
 
     get nome() { return this.clienteForm.get('nome'); }
@@ -108,7 +112,7 @@ export class ClienteAddEditComponent implements OnInit, AfterViewInit {
             const reader = new FileReader();
             reader.onload = (event: any) => this.previewBase64 = event.target.result;
             reader.readAsDataURL(file);
-            this.clienteForm.patchValue({file: 'ok'});
+            this.clienteForm.patchValue({ file: 'ok' });
         }
     }
 
@@ -134,10 +138,21 @@ export class ClienteAddEditComponent implements OnInit, AfterViewInit {
 
     private editarCliente(cliente: ClienteAddEditModel): any {
         this.clienteService.edit(this.id, cliente)
-            .subscribe(data => {
-                this.notification.showSuccess(`Cliente alterado com sucesso!`, 'WorkShopNG2+');
-                const item: any = document.querySelector('#nomeInput');
-                this.setFocus(item);
+            .subscribe((event: HttpEvent<any>) => {
+
+                switch (event.type) {
+                    case HttpEventType.UploadProgress:
+                        this.percentDone = Math.round(100 * event.loaded / event.total);
+                        console.log(this.percentDone + ' %');
+                        break;
+                    case HttpEventType.Response:
+                        this.notification.showSuccess(`Cliente alterado com sucesso!`, 'WorkShopNG2+');
+                        const item: any = document.querySelector('#nomeInput');
+                        this.setFocus(item);
+                        break;
+                    default:
+                        break;
+                }
             },
                 error => {
                     this.notification.showError(`Erro ao tentar editar o cliente`, 'WorkShopNG2+');
@@ -149,18 +164,29 @@ export class ClienteAddEditComponent implements OnInit, AfterViewInit {
 
     private adicionarCliente(cliente: ClienteAddEditModel) {
         this.clienteService.add(cliente)
-            .subscribe(data => {
-                this.notification.showSuccess(`Cliente cadastrado com sucesso!`, 'WorkShopNG2+');
-                this.clienteForm.reset();
-                this.previewBase64 = this.file = null;
-                const item: any = document.querySelector('#nomeInput');
-                this.setFocus(item);
+            .pipe(finalize(() => this.showLoadingIndicator = false)) // Código sempre executado em ambos os casos
+
+            .subscribe((event: HttpEvent<any>) => {
+                switch (event.type) {
+                    case HttpEventType.UploadProgress:
+                        this.percentDone = Math.round(100 * event.loaded / event.total);
+                        console.log(this.percentDone + ' %');
+                        break;
+                    case HttpEventType.Response:
+                        this.notification.showSuccess(`Cliente cadastrado com sucesso!`, 'WorkShopNG2+');
+                        this.clienteForm.reset();
+                        this.previewBase64 = this.file = null;
+                        const item: any = document.querySelector('#nomeInput');
+                        this.setFocus(item);
+                        break;
+                    default:
+                        break;
+                }
+
             },
                 error => {
                     this.notification.showError(`Erro ao tentar cadastrar o cliente`, 'WorkShopNG2+');
-                    this.showLoadingIndicator = false;
-                },
-                () => this.showLoadingIndicator = false
+                }
             );
     }
 
