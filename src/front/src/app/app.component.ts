@@ -8,7 +8,8 @@ import { Router, Event, NavigationStart, NavigationEnd, NavigationCancel, Naviga
 })
 export class AppComponent implements OnInit {
   title = 'front';
-  showLoadingIndicator = false;
+  showLoadingIndicator = true;
+  showMenu = false;
 
   constructor(private router: Router) { }
 
@@ -20,9 +21,10 @@ export class AppComponent implements OnInit {
       }
 
       if (routerEvent instanceof NavigationEnd ||
-        routerEvent instanceof NavigationCancel ||
-        routerEvent instanceof NavigationError) {
+        routerEvent instanceof NavigationCancel) {
         this.showLoadingIndicator = false;
+        // console.log(this.router.url);
+        this.showMenu = !(this.router.url.startsWith('/sign/in') || this.router.url.startsWith('/sign/up'));
       }
 
       if (routerEvent instanceof NavigationError) {
@@ -32,6 +34,8 @@ export class AppComponent implements OnInit {
         if (erro !== null && erro.status === 404) {
           this.router.navigate(['/404']);
         }
+        this.showMenu = !(this.router.url.startsWith('/sign/in') || this.router.url.startsWith('/sign/up'));
+        // this.showMenu = this.router.url !== '/sign/in';
       }
 
     });

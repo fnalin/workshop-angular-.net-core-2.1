@@ -1,10 +1,10 @@
-<app-menu-top></app-menu-top>
+<app-menu-top *ngIf="showMenu"></app-menu-top>
 <app-loading [showLoadingIndicator]="showLoadingIndicator" [texto]="'... Carregando'"></app-loading>
 
 <main class="container p-2">
     <router-outlet></router-outlet>
 </main>
 
-<hr>
+<hr *ngIf="showMenu">
 
-<app-menu-rodape></app-menu-rodape>
+<app-menu-rodape *ngIf="showMenu"></app-menu-rodape>
