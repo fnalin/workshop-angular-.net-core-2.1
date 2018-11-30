@@ -1,4 +1,5 @@
 ﻿using FN.WorkShopAngularNetCore.Domain.Helpers;
+using System.Collections.Generic;
 
 namespace FN.WorkShopAngularNetCore.Domain.Entities
 {
@@ -28,6 +29,8 @@ namespace FN.WorkShopAngularNetCore.Domain.Entities
         public string Email { get; private set; }
 
         public string Senha { get; private set; }
+
+        public RefreshToken RefreshToken { get; private set; }
 
         public void Alterar(string nome, string email)
         {

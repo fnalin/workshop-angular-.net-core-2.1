@@ -64,13 +64,23 @@ namespace FN.WorkShopAngularNetCore.Api
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
+
+                    // Verifica se um token recebido ainda é válido
                     ValidateLifetime = true,
+
+                    // Valida a assinatura de um token recebido
                     ValidateIssuerSigningKey = true,
+
                     ValidIssuer = "fansoft.com.br",
                     ValidAudience = "fansoft.com.br",
                     IssuerSigningKey = new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(_config["SecurityKey"])),
+
+
                     // stackoverflow.com/questions/39728519/jwtsecuritytoken-doesnt-expire-when-it-should
+                    // Tempo de tolerância para a expiração de um token(utilizado
+                    // caso haja problemas de sincronismo de horário entre diferentes
+                    // computadores envolvidos no processo de comunicação)
                     ClockSkew = System.TimeSpan.Zero
                 };
 

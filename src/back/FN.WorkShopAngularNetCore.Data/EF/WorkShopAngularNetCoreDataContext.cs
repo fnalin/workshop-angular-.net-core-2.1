@@ -15,6 +15,8 @@ namespace FN.WorkShopAngularNetCore.Data.EF
 
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<RefreshToken> RefreshToken { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -25,6 +27,7 @@ namespace FN.WorkShopAngularNetCore.Data.EF
         {
             modelBuilder.ApplyConfiguration(new Maps.ClienteMap());
             modelBuilder.ApplyConfiguration(new Maps.UsuarioMap());
+            modelBuilder.ApplyConfiguration(new Maps.RefreshTokenMap());
             modelBuilder.Seed();
         }
 
