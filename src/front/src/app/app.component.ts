@@ -8,7 +8,7 @@ import { Router, Event, NavigationStart, NavigationEnd, NavigationCancel, Naviga
 })
 export class AppComponent implements OnInit {
   title = 'front';
-  showLoadingIndicator = true;
+  showLoadingIndicator = false;
   showMenu = false;
 
   constructor(private router: Router) { }
