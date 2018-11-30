@@ -14,16 +14,16 @@ export class UserService {
 
         // Caso tenha um token notifique quem se inscreveu no userSubject
         if (this.tokenService.hasToken()) {
-            this.decodeAndNotify();
+            this.decodeAndNotifyUser();
         }
     }
 
     setToken(token: string) {
         this.tokenService.setToken(token);
-        this.decodeAndNotify();
+        this.decodeAndNotifyUser();
     }
 
-    private decodeAndNotify() {
+    private decodeAndNotifyUser() {
         const token = this.tokenService.getToken();
 
         // pega o payload do jwt
@@ -52,5 +52,4 @@ export class UserService {
     get isLogged() {
         return this.tokenService.hasToken();
     }
-
 }

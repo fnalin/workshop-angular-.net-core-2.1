@@ -27,7 +27,7 @@ namespace FN.WorkShopAngularNetCore.Api.Controllers
             _userRepository = userRepository;
         }
 
-        
+
         [HttpPost, AllowAnonymous]
         public async Task<IActionResult> RequestToken([FromBody] Login request)
         {
@@ -55,12 +55,15 @@ namespace FN.WorkShopAngularNetCore.Api.Controllers
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
                 var token = new JwtSecurityToken(
-                     issuer: "fansoft.com.br",
-                     audience: "fansoft.com.br",
-                     claims: claims,
-                     expires: DateTime.Now.AddMinutes(30),
-                     signingCredentials: creds);
+                    issuer: "fansoft.com.br",
+                    audience: "fansoft.com.br",
+                    claims: claims,
+                    expires: DateTime.UtcNow.AddMinutes(5),
+                    notBefore: DateTime.UtcNow,
+                    signingCredentials: creds);
 
+                
+                // Add o token no header também
                 Request.HttpContext.Response.Headers.Add("x-access-token", new JwtSecurityTokenHandler().WriteToken(token));
 
                 return Ok(new
@@ -72,7 +75,8 @@ namespace FN.WorkShopAngularNetCore.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetClaims() {
+        public IActionResult GetClaims()
+        {
             var claimsIdentity = User.Identity as ClaimsIdentity;
 
             // alternatively
@@ -87,8 +91,10 @@ namespace FN.WorkShopAngularNetCore.Api.Controllers
             //    System.Console.WriteLine(claim.Type + ":" + claim.Value);
             //}
 
-            var data = claimsIdentity.Claims.ToList().Select(c => new {
-                c.Type, c.Value
+            var data = claimsIdentity.Claims.ToList().Select(c => new
+            {
+                c.Type,
+                c.Value
             });
 
             return Ok(data);

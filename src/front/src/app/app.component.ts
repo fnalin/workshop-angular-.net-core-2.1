@@ -29,15 +29,13 @@ export class AppComponent implements OnInit {
 
       if (routerEvent instanceof NavigationError) {
         this.showLoadingIndicator = false;
-        console.log('Erro na rota');
+        // console.log('Erro na rota');
         const erro = routerEvent.error;
         if (erro !== null && erro.status === 404) {
           this.router.navigate(['/404']);
         }
         this.showMenu = !(this.router.url.startsWith('/sign/in') || this.router.url.startsWith('/sign/up'));
-        // this.showMenu = this.router.url !== '/sign/in';
       }
-
     });
   }
 }

@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -68,19 +69,21 @@ namespace FN.WorkShopAngularNetCore.Api
                     ValidIssuer = "fansoft.com.br",
                     ValidAudience = "fansoft.com.br",
                     IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(_config["SecurityKey"]))
+                        Encoding.UTF8.GetBytes(_config["SecurityKey"])),
+                    // stackoverflow.com/questions/39728519/jwtsecuritytoken-doesnt-expire-when-it-should
+                    ClockSkew = System.TimeSpan.Zero
                 };
 
                 options.Events = new JwtBearerEvents
                 {
                     OnAuthenticationFailed = context =>
                     {
-                        //Console.WriteLine("Token inválido..:. " + context.Exception.Message);
+                        //Debug.WriteLine("Token inválido..:. " + context.Exception.Message);
                         return Task.CompletedTask;
                     },
                     OnTokenValidated = context =>
                     {
-                        //Console.WriteLine("Token válido...: " + context.SecurityToken);
+                        //Debug.WriteLine("Token válido...: " + context.SecurityToken);
                         return Task.CompletedTask;
                     }
                 };

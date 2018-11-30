@@ -9,6 +9,7 @@ import { ClienteListResolver } from './clientes/cliente-list/cliente-list.resolv
 import { ClienteAddEditComponent } from './clientes/cliente-add-edit/cliente-add-edit.component';
 import { ClienteAddEditResolver } from './clientes/cliente-add-edit/cliente-add-edit.resolver';
 import { AuthGuard } from './sign/auth.guard';
+import { UnauthorizedComponent } from './pages/errors/unauthorized/unauthorized.component';
 
 // pathMatch: 'full'=> não vincula partes da rota, ou seja, tem que ser todo o endereço
 const routes: Routes = [
@@ -48,8 +49,9 @@ const routes: Routes = [
 
     },
 
-    { path: '404', component: NotFoundComponent },
-    { path: '**', component: NotFoundComponent }
+    { path: 'error/404', component: NotFoundComponent },
+    { path: 'error/401', component: UnauthorizedComponent },
+    { path: '**', redirectTo: 'error/404', pathMatch: 'full' }
 ];
 
 @NgModule({
